@@ -10,7 +10,7 @@
 
 .CurrentConditions-row2 {
   display: grid;
-  grid-template-columns: 300px 200px;
+  grid-template-columns: 1fr 1fr; /*300px 200px;*/
 }
 
 .CurrentConditions-icon-temp {
@@ -19,6 +19,7 @@
   justify-content: flex-start;
   align-content: flex-start;
   color: #171717;
+  height: 100%;
 }
 
 .CurrentConditions-icon-temp img {
@@ -26,6 +27,6 @@
 }
 
 .CurrentConditions-temp {
-  font-size: 3em;
+  font-size: 3.2em;
   transform: translate(0,-10px);
 }
