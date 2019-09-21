@@ -1,3 +1,8 @@
+## Capstone Log for 9/21
+* researching weather APIs. Got keys for [Open Weather](OpenWeatherMap.org) and [Dark Sky](DarkSky.net).
+
+<hr>
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
