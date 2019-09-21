@@ -45,6 +45,10 @@ Date
 
 ![App Mockup](Weather_App_Mockup.png)
 
+### Component Tree Diagram
+
+![Component Tree Diagram](Component_Tree_Diagram.png)
+
 <hr>
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
