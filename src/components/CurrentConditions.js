@@ -31,7 +31,6 @@ CurrentConditions.propTypes = {
   location: PropTypes.string.isRequired,
   time: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
   temp: PropTypes.number.isRequired,
   precipitation: PropTypes.number.isRequired,
   humidity: PropTypes.number.isRequired,
