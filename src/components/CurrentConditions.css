@@ -1,3 +1,29 @@
 .CurrentConditions {
+  font-size: 1.5em;
+  padding: 5px 0;
+}
 
+.CurrentConditions-location {
+  font-size: 1.5em;
+}
+
+.CurrentConditions-row2 {
+  display: grid;
+  grid-template-columns: 300px 200px;
+}
+
+.CurrentConditions-icon-temp {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: flex-start;
+}
+
+.CurrentConditions-icon-temp img {
+  height: 100%;
+}
+
+.CurrentConditions-temp {
+  font-size: 3em;
+  transform: translate(0,-10px);
 }

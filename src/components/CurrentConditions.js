@@ -7,19 +7,20 @@ function CurrentConditions(props) {
   return (
     <div className="CurrentConditions">
       <div className="CurrentConditions-row1">
-        <p className="CurrentConditions-location">{props.location}</p>
-        <p className="CurrentConditions-time">{props.time}</p>
-        <p className="CurrentConditions-description">{props.description}</p>
+        <div className="CurrentConditions-location">{props.location}</div>
+        <div className="CurrentConditions-time">{props.time}</div>
+        <div className="CurrentConditions-description">{props.description}</div>
       </div>
       <div className="CurrentConditions-row2">
         <div className="CurrentConditions-icon-temp">
           <img src={imageForCondition(props.description)} />
-          <p>{props.temp}°F</p>
+          <div className="CurrentConditions-temp">{props.temp}</div>
+          <div className="temp-units">°F</div>
         </div>
         <div className="CurrentConditions-misc-data">
-          <p>Precipitation: {props.precipitation}%</p>
-          <p>Humidity: {props.humidity}%</p>
-          <p>Wind: {props.windspeed} mph</p>
+          <div>Precipitation: {props.precipitation}%</div>
+          <div>Humidity: {props.humidity}%</div>
+          <div>Wind: {props.windspeed} mph</div>
         </div>
       </div>
     </div>
