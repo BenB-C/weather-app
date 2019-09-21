@@ -1,6 +1,7 @@
 .CurrentConditions {
   font-size: 1.5em;
   padding: 5px 0;
+  margin-bottom: 10px;
 }
 
 .CurrentConditions-location {
@@ -17,6 +18,7 @@
   flex-direction: row;
   justify-content: flex-start;
   align-content: flex-start;
+  color: #171717;
 }
 
 .CurrentConditions-icon-temp img {

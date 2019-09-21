@@ -1,0 +1,12 @@
+.DayForecast {
+  text-align: center;
+}
+
+.DayForecast img {
+  width: 50px;
+}
+
+.DayForecast-high {
+  margin-right: 10px;
+  color: #414141;
+}

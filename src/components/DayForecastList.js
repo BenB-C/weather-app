@@ -1,6 +1,6 @@
 import React from 'react';
 import DayForecast from './DayForecast';
-import { v4 } from 'uuid';
+import './DayForecastList.css';
 
 function DayForecastList() {
   const dayForecastList = [
