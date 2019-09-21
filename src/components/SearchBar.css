@@ -1,0 +1,15 @@
+.SearchBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  height: 50px;
+}
+
+.SearchBar img {
+  height: 100%;
+}
+
+.SearchBar input {
+  width: 500px;
+  font-size: 2em;
+}
