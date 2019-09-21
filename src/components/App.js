@@ -19,7 +19,6 @@ function App() {
     humidity: Math.round(currently.humidity * 100),
     windspeed: Math.round(currently.windSpeed),
   }
-  console.log('currentConditionsData', currentConditionsData);
   return (
     <div className="App">
       <SearchBar />
