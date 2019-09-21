@@ -41,6 +41,10 @@ Date
 * Maybe a ruby+rails backend to store historical weather data in a database?
 * Some kind of graphics library for graphing temperature over time
 
+### Visual Mockup
+
+![App Mockup](Weather_App_Mockup.png)
+
 <hr>
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
