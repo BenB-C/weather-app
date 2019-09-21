@@ -1,5 +1,45 @@
-## Capstone Log for 9/21
-* researching weather APIs. Got keys for [Open Weather](OpenWeatherMap.org) and [Dark Sky](DarkSky.net).
+
+# Weather App
+
+## Project Description
+
+### Project’s Purpose or Goal:
+Display a weather forecast for a location imputed by the user
+
+### Absolute minimum features the project requires to meet this purpose or goal:
+
+Given a city or zipcode:
+* Display the current weather conditions
+* Display a 5 to 7-day forecast, containing for each day:
+  * Day of the week
+Date
+  * Icon for the weather
+  * Description of the weather (clear, sunny, rain, etc)
+  * High/Low temperatures
+  * Chance of precipitation
+  * Wind direction and speed
+  * Humidity
+
+### What tools, frameworks, libraries, APIs, modules and/or other resources (whatever is specific to your track, and your language) will you use to create this MVP? List them all here. Be specific.
+
+* React
+* Weather API
+
+### If you finish developing the minimum viable product (MVP) with time to spare, what will you work on next? Describe these features here: Be specific.
+
+* Display an hourly forecast in tabular form
+* Display an hourly temperature graph
+* Display sunrise, sunset, first light, and last light times
+* Display a radar/weather map for the given location
+* Display historical weather info for the given location (either detailed over time or average high/low for the given day over the last few years)
+* User authentication and ability to save locations for each user
+
+### What additional tools, frameworks, libraries, APIs, or other resources will these additional features require?
+
+* Possible a second API for historical weather data
+* Google maps + location APIs?
+* Maybe a ruby+rails backend to store historical weather data in a database?
+* Some kind of graphics library for graphing temperature over time
 
 <hr>
 
