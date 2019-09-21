@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './CurrentConditions.css';
-import imageForCondition from './../helpers/imageForCondition'
+import imageForIcon from './../helpers/imageForIcon'
 
 function CurrentConditions(props) {
   return (
@@ -9,11 +9,11 @@ function CurrentConditions(props) {
       <div className="CurrentConditions-row1">
         <div className="CurrentConditions-location">{props.location}</div>
         <div className="CurrentConditions-time">{props.time}</div>
-        <div className="CurrentConditions-description">{props.description}</div>
+        <div className="CurrentConditions-summary">{props.summary}</div>
       </div>
       <div className="CurrentConditions-row2">
         <div className="CurrentConditions-icon-temp">
-          <img src={imageForCondition(props.description)} alt="weather icon"/>
+          <img src={imageForIcon(props.icon)} alt="weather icon"/>
           <div className="CurrentConditions-temp">{props.temp}</div>
           <div className="temp-units">°F</div>
         </div>
@@ -30,7 +30,8 @@ function CurrentConditions(props) {
 CurrentConditions.propTypes = {
   location: PropTypes.string.isRequired,
   time: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  summary: PropTypes.string.isRequired,
+  icon: PropTypes.string.isRequired,
   temp: PropTypes.number.isRequired,
   precipitation: PropTypes.number.isRequired,
   humidity: PropTypes.number.isRequired,

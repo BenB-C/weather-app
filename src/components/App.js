@@ -3,21 +3,27 @@ import './App.css';
 import SearchBar from './SearchBar';
 import CurrentConditions from './CurrentConditions';
 import DayForecastList from './DayForecastList';
+import sampleData from './sampleData.json';
 
 function App() {
+  const currently = sampleData.currently;
+  const unixTime = currently.time;
+  const date = new Date(unixTime * 1000);
   const currentConditionsData = {
-    location: 'Portland, OR 97205',
-    time: 'Saturday 9:00 AM',
-    description: 'Mostly Cloudy',
-    temp: 59,
-    precipitation: 0,
-    humidity: 86,
-    windspeed: 2,
+    location: 'Portland, OR 97205', //TODO: get location from lat,long in json
+    time: date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
+    summary: currently.summary,
+    icon: currently.icon,
+    temp: Math.round(currently.temperature),
+    precipitation: Math.round(currently.precipProbability * 100),
+    humidity: Math.round(currently.humidity * 100),
+    windspeed: Math.round(currently.windSpeed),
   }
+  console.log('currentConditionsData', currentConditionsData);
   return (
     <div className="App">
       <SearchBar />
-      <CurrentConditions {... currentConditionsData} />
+      <CurrentConditions {...currentConditionsData} />
       <DayForecastList />
     </div>
   );

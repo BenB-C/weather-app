@@ -1,58 +1,66 @@
 import React from 'react';
 import DayForecast from './DayForecast';
 import './DayForecastList.css';
+import sampleData from './sampleData.json';
 
 function DayForecastList() {
-  const dayForecastList = [
-    {
-      day:'Sat',
-      description: 'Mostly Cloudy',
-      high: 71,
-      low: 58,
-    },
-    {
-      day:'Sun',
-      description: 'Rain',
-      high: 66,
-      low: 53,
-    },
-    {
-      day:'Mon',
-      description: 'Partly Cloudy',
-      high: 69,
-      low: 56,
-    },
-    {
-      day:'Tue',
-      description: 'Partly Cloudy',
-      high: 69,
-      low: 52,
-    },
-    {
-      day:'Wed',
-      description: 'Partly Cloudy',
-      high: 67,
-      low: 52,
-    },
-    {
-      day:'Thu',
-      description: 'Showers',
-      high: 61,
-      low: 49,
-    },
-    {
-      day:'Fri',
-      description: 'Showers',
-      high: 59,
-      low: 47,
-    },
-    {
-      day:'Sat',
-      description: 'Mostly Cloudy',
-      high: 58,
-      low: 46,
-    },
-  ]
+  const dayForecastList = sampleData.daily.data.map(data => {
+    return ({
+      day: new Date(data.time * 100).toLocaleString('en-US', { weekday: 'short' }),
+      icon: data.icon,
+      high: Math.round(data.temperatureHigh),
+      low: Math.round(data.temperatureLow),
+    });
+  });
+    // {
+    //   day:'Sat',
+    //   description: 'Mostly Cloudy',
+    //   high: 71,
+    //   low: 58,
+    // },
+    // {
+    //   day:'Sun',
+    //   description: 'Rain',
+    //   high: 66,
+    //   low: 53,
+    // },
+    // {
+    //   day:'Mon',
+    //   description: 'Partly Cloudy',
+    //   high: 69,
+    //   low: 56,
+    // },
+    // {
+    //   day:'Tue',
+    //   description: 'Partly Cloudy',
+    //   high: 69,
+    //   low: 52,
+    // },
+    // {
+    //   day:'Wed',
+    //   description: 'Partly Cloudy',
+    //   high: 67,
+    //   low: 52,
+    // },
+    // {
+    //   day:'Thu',
+    //   description: 'Showers',
+    //   high: 61,
+    //   low: 49,
+    // },
+    // {
+    //   day:'Fri',
+    //   description: 'Showers',
+    //   high: 59,
+    //   low: 47,
+    // },
+    // {
+    //   day:'Sat',
+    //   description: 'Mostly Cloudy',
+    //   high: 58,
+    //   low: 46,
+    // },
+  // ]
   return (
     <div className="DayForecastList">
       {dayForecastList.map(
