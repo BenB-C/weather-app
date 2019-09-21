@@ -13,7 +13,7 @@ function CurrentConditions(props) {
       </div>
       <div className="CurrentConditions-row2">
         <div className="CurrentConditions-icon-temp">
-          <img src={imageForCondition(props.description)} />
+          <img src={imageForCondition(props.description)} alt="weather icon"/>
           <div className="CurrentConditions-temp">{props.temp}</div>
           <div className="temp-units">°F</div>
         </div>
