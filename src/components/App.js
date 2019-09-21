@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import SearchBar from './SearchBar';
 import CurrentConditions from './CurrentConditions';
+import DayForecastList from './DayForecastList';
 
 function App() {
   const currentConditionsData = {
@@ -17,6 +18,7 @@ function App() {
     <div className="App">
       <SearchBar />
       <CurrentConditions {... currentConditionsData} />
+      <DayForecastList />
     </div>
   );
 }
