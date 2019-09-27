@@ -49,7 +49,29 @@ Date
 
 ![Component Tree Diagram](Component_Tree_Diagram.png)
 
-<hr>
+### State Slices
+
+_In CurrentConditions component:_ (Will probably rename to _DayDetails_)
+* Object with attributes:
+  * location (String)
+  * time (String)
+  * summary (String)
+  * iconName (String)
+  * temp (Number)
+  * precipitation (Number)
+  * humidity (Number)
+  * windspeed (Number)
+
+_In DayForecastList component:_
+* Array with 7 objects, each having attributes:
+ * dayOfWeek (String)
+ * iconName (String)
+ * highTemp (Number)
+ * lowTemp (Number)
+
+_In both components:_
+
+* selectedDayIndex (Number)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
