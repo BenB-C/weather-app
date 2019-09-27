@@ -6,13 +6,13 @@ import sampleData from './sampleData.json';
 function DayForecastList() {
   const dayForecastList = sampleData.daily.data.map(data => {
     return ({
-      day: new Date(data.time * 100).toLocaleString('en-US', { weekday: 'short' }),
+      day: new Date(data.time * 1000).toLocaleString('en-US', { weekday: 'short' }),
       icon: data.icon,
       high: Math.round(data.temperatureHigh),
       low: Math.round(data.temperatureLow),
     });
   });
-  
+
   return (
     <div className="DayForecastList">
       {dayForecastList.map(
