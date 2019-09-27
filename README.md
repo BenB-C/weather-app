@@ -8,17 +8,21 @@ Display a weather forecast for a location imputed by the user
 
 ### Absolute minimum features the project requires to meet this purpose or goal:
 
-Given a city or zipcode:
-* Display the current weather conditions
-* Display a 5 to 7-day forecast, containing for each day:
+A user will be able to enter a location (city and state or zipcode) and see:
+* The current weather conditions, containing:
+ * Location
+ * Time of last update
+ * Summary of conditions
+ * Icon corresponding to conditions (sun for sunny/clear, clouds for cloudy, etc.)
+ * Change of precipitation percentage
+ * Humidity percentage
+ * Windspeed in miles per hour
+* A 7-day forecast, containing for each day:
   * Day of the week
-Date
   * Icon for the weather
-  * Description of the weather (clear, sunny, rain, etc)
   * High/Low temperatures
-  * Chance of precipitation
-  * Wind direction and speed
-  * Humidity
+
+A user will be able to click on any day in the 7-day forecast and the current conditions will display will change to show corresponding details for the selected day.
 
 ### What tools, frameworks, libraries, APIs, modules and/or other resources (whatever is specific to your track, and your language) will you use to create this MVP? List them all here. Be specific.
 
