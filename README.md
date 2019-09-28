@@ -24,6 +24,8 @@ A user will be able to enter a location (city and state or zipcode) and see:
 
 A user will be able to click on any day in the 7-day forecast and the current conditions will display will change to show corresponding details for the selected day.
 
+A user will be able to click an update/refresh button to update the current conditions and
+
 ### What tools, frameworks, libraries, APIs, modules and/or other resources (whatever is specific to your track, and your language) will you use to create this MVP? List them all here. Be specific.
 
 * React
@@ -55,9 +57,12 @@ A user will be able to click on any day in the 7-day forecast and the current co
 
 ### State Slices
 
-_In CurrentConditions component:_ (Will probably rename to _DayDetails_)
-* Object with attributes:
-  * location (String)
+* location:
+ * description (String)
+ * latitude (Number)
+ * longitude (Number)
+
+* currentConditions:
   * time (String)
   * summary (String)
   * iconName (String)
@@ -66,16 +71,32 @@ _In CurrentConditions component:_ (Will probably rename to _DayDetails_)
   * humidity (Number)
   * windspeed (Number)
 
-_In DayForecastList component:_
-* Array with 7 objects, each having attributes:
+* dayForecastData, array with 7 objects, each having attributes:
  * dayOfWeek (String)
  * iconName (String)
  * highTemp (Number)
  * lowTemp (Number)
-
-_In both components:_
+ * summary (String)
+ * temp (Number)
+ * precipitation (Number)
+ * humidity (Number)
+ * windspeed (Number)
 
 * selectedDayIndex (Number)
+
+### Determining where state will live
+
+SearchBar needs to set _location_, _currentConditions_, and _dayForecastData_.
+
+CurrentConditions needs access to _location_, _currentConditions_, _selectedDayIndex_, and _dayForecastData_
+
+DayForecastList needs access to _dayForecastData_ and needs to be able to set _selectedDayIndex_
+
+RefreshButton (TODO) needs to be able to set _currentConditions_ and _dayForecastData_.
+
+
+<hr>
+<hr>
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
