@@ -67,7 +67,7 @@ A user will be able to click an update/refresh button to update the current cond
   * summary (String)
   * iconName (String)
   * temp (Number)
-  * precipitation (Number)
+  * precipProbability (Number)
   * humidity (Number)
   * windspeed (Number)
 
@@ -78,7 +78,7 @@ A user will be able to click an update/refresh button to update the current cond
  * lowTemp (Number)
  * summary (String)
  * temp (Number)
- * precipitation (Number)
+ * precipProbability (Number)
  * humidity (Number)
  * windspeed (Number)
 
