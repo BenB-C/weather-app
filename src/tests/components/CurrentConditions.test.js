@@ -11,9 +11,9 @@ it('renders without crashing', () => {
     location: 'Portland, OR 97205', //TODO: get location from lat,long in json
     time: date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
     summary: currently.summary,
-    icon: currently.icon,
+    iconName: currently.icon,
     temp: Math.round(currently.temperature),
-    precipitation: Math.round(currently.precipProbability * 100),
+    precipProbability: Math.round(currently.precipProbability * 100),
     humidity: Math.round(currently.humidity * 100),
     windspeed: Math.round(currently.windSpeed),
   }
