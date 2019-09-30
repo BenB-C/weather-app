@@ -1,4 +1,5 @@
 import dayChangeReducer from './../../reducers/dayChangeReducer';
+import locationChangeReducer from './../../reducers/locationChangeReducer';
 import rootReducer from './../../reducers/';
 // import * as types from './../../constants/ActionTypes';
 import {initialState} from './../../constants/initialState.js';
@@ -13,7 +14,7 @@ describe('Weather App', () => {
       expect(dayChangeReducer(initialState, { type: null })).toEqual(initialState);
     });
 
-    it('Should change selectedSong.', () => {
+    it('Should change selected day index.', () => {
       expect(dayChangeReducer(initialState.selectedDayIndex, actions.changeDay(2))).toEqual(2);
     });
   });

@@ -1,11 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import imageForIcon from './../helpers/imageForIcon';
+import { connect } from 'react-redux';
+import { changeDay } from './../actions';
 import './DayForecast.css';
 
 function DayForecast(props) {
+  // console.log("DayForecast props", props);
+  function handleClick() {
+    console.log('day ' + props.index + ' clicked');
+    console.log(changeDay(props.index));
+    props.dispatch(changeDay(props.index));
+  }
   return (
-    <div className="DayForecast">
+    <div className="DayForecast" onClick={handleClick} >
       <div>{props.day}</div>
       <img src={imageForIcon(props.icon)} alt="weather icon"/>
       <div className="DayForecast-high-low">
@@ -21,7 +29,8 @@ DayForecast.propTypes = {
   icon: PropTypes.string.isRequired,
   high: PropTypes.number.isRequired,
   low: PropTypes.number.isRequired,
-
 }
 
-export default DayForecast;
+const mapStateToProps = state => state;
+
+export default connect(mapStateToProps)(DayForecast);

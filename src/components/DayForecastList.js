@@ -1,12 +1,13 @@
 import React from 'react';
 import DayForecast from './DayForecast';
 import './DayForecastList.css';
-import sampleData from './sampleData.json';
+import { connect } from 'react-redux';
+import timeFromUnixTime from './../helpers/timeFromUnixTime.js'
 
-function DayForecastList() {
-  const dayForecastList = sampleData.daily.data.map(data => {
+function DayForecastList(props) {
+  const dayForecastList = props.dailyConditions.map(data => {
     return ({
-      day: new Date(data.time * 1000).toLocaleString('en-US', { weekday: 'short' }),
+      day: timeFromUnixTime(data.time, 'weekdayShort'),
       icon: data.icon,
       high: Math.round(data.temperatureHigh),
       low: Math.round(data.temperatureLow),
@@ -16,10 +17,16 @@ function DayForecastList() {
   return (
     <div className="DayForecastList">
       {dayForecastList.map(
-        (dayForecast, index) => <DayForecast {...dayForecast} key={index} />
+        (dayForecast, index) => <DayForecast {...dayForecast} index={index} key={index} />
       )}
     </div>
   );
 }
 
-export default DayForecastList;
+function mapStateToProps(state) {
+  return ({
+    dailyConditions: state.dailyConditions
+  });
+}
+
+export default connect(mapStateToProps)(DayForecastList);

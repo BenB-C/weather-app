@@ -1,26 +1,38 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './CurrentConditions.css';
-import imageForIcon from './../helpers/imageForIcon'
+import imageForIcon from './../helpers/imageForIcon';
+import timeFromUnixTime from './../helpers/timeFromUnixTime';
 
 function CurrentConditions(props) {
+  const conditions = props.conditions;
+  let time;
+  let temp;
+  if (props.selectedDayIndex == null) {
+    time = timeFromUnixTime(conditions.time, 'weekdayAndTime');
+    temp = Math.round(conditions.temperature);
+  } else {
+    time = timeFromUnixTime(conditions.time, 'weekdayAndDate');
+    temp = Math.round(conditions.temperatureHigh);
+  }
   return (
     <div className="CurrentConditions">
       <div className="CurrentConditions-row1">
         <div className="CurrentConditions-location">{props.location}</div>
-        <div className="CurrentConditions-time">{props.time}</div>
-        <div className="CurrentConditions-summary">{props.summary}</div>
+        <div className="CurrentConditions-time">{time}</div>
+        <div className="CurrentConditions-summary">{conditions.summary}</div>
       </div>
       <div className="CurrentConditions-row2">
         <div className="CurrentConditions-icon-temp">
-          <img src={imageForIcon(props.iconName)} alt="weather icon"/>
-          <div className="CurrentConditions-temp">{props.temp}</div>
+          <img src={imageForIcon(conditions.icon)} alt="weather icon"/>
+          <div className="CurrentConditions-temp">{temp}</div>
           <div className="temp-units">°F</div>
         </div>
         <div className="CurrentConditions-misc-data">
-          <div>Precipitation: {props.precipProbability}%</div>
-          <div>Humidity: {props.humidity}%</div>
-          <div>Wind: {props.windspeed} mph</div>
+          <div>Precipitation: {Math.round(conditions.precipProbability * 100)}%</div>
+          <div>Humidity: {Math.round(conditions.humidity * 100)}%</div>
+          <div>Wind: {Math.round(conditions.windSpeed)} mph</div>
         </div>
       </div>
     </div>
@@ -28,14 +40,20 @@ function CurrentConditions(props) {
 }
 
 CurrentConditions.propTypes = {
+  selectedDayIndex: PropTypes.number,
+  conditions: PropTypes.object.isRequired,
   location: PropTypes.string.isRequired,
-  time: PropTypes.string.isRequired,
-  summary: PropTypes.string.isRequired,
-  iconName: PropTypes.string.isRequired,
-  temp: PropTypes.number.isRequired,
-  precipProbability: PropTypes.number.isRequired,
-  humidity: PropTypes.number.isRequired,
-  windspeed: PropTypes.number.isRequired,
 }
 
-export default CurrentConditions;
+const mapStateToProps = state => {
+  const dayIndex = state.selectedDayIndex;
+  // const dayIndex = 3;
+  return({
+    selectedDayIndex: dayIndex,
+    conditions: state.dailyConditions[dayIndex] || state.currentConditions,
+    location: state.location.description,
+  });
+};
+
+
+export default connect(mapStateToProps)(CurrentConditions);
