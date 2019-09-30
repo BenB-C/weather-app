@@ -4,6 +4,7 @@ import SearchBar from './SearchBar';
 import CurrentConditions from './CurrentConditions';
 import DayForecastList from './DayForecastList';
 import sampleData from './sampleData.json';
+import timeFromUnixTime from './../helpers/timeFromUnixTime';
 
 class App extends React.Component {
   constructor(props) {
@@ -17,7 +18,7 @@ class App extends React.Component {
         longitude: -122.69,
       },
       currentConditions: {
-        time: new Date(currently.time * 1000).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
+        time: timeFromUnixTime(currently.time),
         summary: currently.summary,
         iconName: currently.icon,
         temp: Math.round(currently.temperature),

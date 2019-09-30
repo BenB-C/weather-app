@@ -22,9 +22,9 @@ A user will be able to enter a location (city and state or zipcode) and see:
   * Icon for the weather
   * High/Low temperatures
 
-A user will be able to click on any day in the 7-day forecast and the current conditions will display will change to show corresponding details for the selected day.
+A user will be able to click on any day in the 7-day forecast and the current conditions will change to show corresponding details for the selected day.
 
-A user will be able to click an update/refresh button to update the current conditions and
+A user will be able to click an update/refresh button to update the current conditions and 7-day forecast
 
 ### What tools, frameworks, libraries, APIs, modules and/or other resources (whatever is specific to your track, and your language) will you use to create this MVP? List them all here. Be specific.
 

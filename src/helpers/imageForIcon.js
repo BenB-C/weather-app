@@ -43,8 +43,8 @@ import storms from './../assets/images/weather/storms.png';
 import unknown from './../assets/images/weather/unknown.png';
 import windy from './../assets/images/weather/windy.png';
 
-function imageForIcon(icon) {
-  switch (icon) {
+function imageForIcon(iconName) {
+  switch (iconName) {
     case 'clear-day': return clear;
     case 'clear-night': return clearnight;
     case 'rain': return rain03;
