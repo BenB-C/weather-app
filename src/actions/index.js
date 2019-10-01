@@ -27,8 +27,6 @@ export function fetchLocation(providedLocation) {
       response => response.json(),
       error => console.log('An error occurred.', error)
     ).then(function(json) {
-      console.log('LOCATION API RESPONSE:');
-      console.log(json);
       const results = json.results;
       if (results[0] && results[0].locations[0]) {
         const location = results[0].locations[0];
@@ -59,8 +57,6 @@ export function fetchWeather(latitude, longitude, dispatch) {
     response => response.json(),
     error => console.log('An error occurred.', error)
   ).then(function(json) {
-    console.log('WEATHER API RESPONSE:');
-    console.log(json);
     dispatch(changeDay(null));
     dispatch(changeCurrentConditions(json.currently));
     dispatch(changeDailyConditions(json.daily.data));
