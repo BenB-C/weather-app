@@ -27,6 +27,9 @@ DayForecast.propTypes = {
   index: PropTypes.number.isRequired,
 }
 
-const mapStateToProps = state => state;
-
+const mapStateToProps = state => {
+  return({
+    dailyConditions: state.dailyConditions,
+  });
+}
 export default connect(mapStateToProps)(DayForecast);
