@@ -2,7 +2,7 @@ import dayChangeReducer from './../../reducers/dayChangeReducer';
 import locationChangeReducer from './../../reducers/locationChangeReducer';
 import rootReducer from './../../reducers/';
 // import * as types from './../../constants/ActionTypes';
-import {initialState} from './../../constants/initialState.js';
+import {initialState} from './../../constants/InitialState.js';
 import { createStore } from 'redux';
 import * as actions from './../../actions/';
 

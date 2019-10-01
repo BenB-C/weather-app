@@ -1,6 +1,6 @@
-// import * as types from './../constants/ActionTypes';
+import { CHANGE_DAY } from './../constants/ActionTypes';
 
 export const changeDay = (newSelectedDayIndex) => ({
-  type: 'CHANGE_DAY',
+  type: CHANGE_DAY,
   newSelectedDayIndex
 });
