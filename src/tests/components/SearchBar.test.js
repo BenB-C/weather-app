@@ -10,6 +10,6 @@ const store = createStore(rootReducer, initialState);
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<Provider><SearchBar /></Provider>, div);
+  ReactDOM.render(<Provider store={store}><SearchBar /></Provider>, div);
   ReactDOM.unmountComponentAtNode(div);
 });
