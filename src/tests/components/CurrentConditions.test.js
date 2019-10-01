@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import CurrentConditions from './../../components/CurrentConditions';
-import sampleData from './../../components/sampleData.json';
+import sampleData from './../../constants/sampleData.json';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import rootReducer from './../../reducers/';
