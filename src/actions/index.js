@@ -1,4 +1,4 @@
-import { CHANGE_DAY, CHANGE_LOCATION } from './../constants/ActionTypes';
+import { CHANGE_DAY, CHANGE_LOCATION, CHANGE_CURRENT_CONDITIONS, CHANGE_DAILY_CONDITIONS } from './../constants/ActionTypes';
 
 export const changeDay = (newSelectedDayIndex) => ({
   type: CHANGE_DAY,
@@ -8,6 +8,16 @@ export const changeDay = (newSelectedDayIndex) => ({
 export const changeLocation = (newLocation) => ({
   type: CHANGE_LOCATION,
   newLocation,
+});
+
+export const changeCurrentConditions = (newConditions) => ({
+  type: CHANGE_CURRENT_CONDITIONS,
+  newConditions,
+});
+
+export const changeDailyConditions = (newConditionsArray) => ({
+  type: CHANGE_DAILY_CONDITIONS,
+  newConditions: newConditionsArray,
 });
 
 export function fetchLocation(providedLocation) {
@@ -34,8 +44,8 @@ export function fetchLocation(providedLocation) {
           // Location is from another country, append country abbreviation
           newLocation.description += ', ' + location.adminArea1;
         }
-        fetchWeather(lat, lng);
         dispatch(changeLocation(newLocation));
+        fetchWeather(lat, lng, dispatch);
       } else {
         console.log('No location found matching ' + providedLocation);
       }
@@ -43,7 +53,7 @@ export function fetchLocation(providedLocation) {
   };
 }
 
-export function fetchWeather(latitude, longitude) {
+export function fetchWeather(latitude, longitude, dispatch) {
   const URL = process.env.REACT_APP_WEATHER_URL + latitude + ',' + longitude;
   return fetch(URL).then(
     response => response.json(),
@@ -51,5 +61,8 @@ export function fetchWeather(latitude, longitude) {
   ).then(function(json) {
     console.log('WEATHER API RESPONSE:');
     console.log(json);
+    dispatch(changeDay(null));
+    dispatch(changeCurrentConditions(json.currently));
+    dispatch(changeDailyConditions(json.daily.data));
   });
 }
