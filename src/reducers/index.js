@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import dayChangeReducer from './dayChangeReducer';
-import locationChangeReducer from './locationChangeReducer';
 import currentConditionsReducer from './currentConditionsReducer';
 import dailyConditionsReducer from './dailyConditionsReducer';
+import dayChangeReducer from './dayChangeReducer';
+import locationChangeReducer from './locationChangeReducer';
 
 const rootReducer = combineReducers({
   selectedDayIndex: dayChangeReducer,
