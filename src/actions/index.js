@@ -1,28 +1,46 @@
-import { CHANGE_DAY, CHANGE_LOCATION, CHANGE_CURRENT_CONDITIONS, CHANGE_DAILY_CONDITIONS } from './../constants/ActionTypes';
+import * as types from './../constants/ActionTypes';
 
 export const changeDay = (newSelectedDayIndex) => ({
-  type: CHANGE_DAY,
+  type: types.CHANGE_DAY,
   newSelectedDayIndex,
 });
 
 export const changeLocation = (newLocation) => ({
-  type: CHANGE_LOCATION,
+  type: types.CHANGE_LOCATION,
   newLocation,
 });
 
 export const changeCurrentConditions = (newConditions) => ({
-  type: CHANGE_CURRENT_CONDITIONS,
+  type: types.CHANGE_CURRENT_CONDITIONS,
   newConditions,
 });
 
 export const changeDailyConditions = (newConditionsArray) => ({
-  type: CHANGE_DAILY_CONDITIONS,
+  type: types.CHANGE_DAILY_CONDITIONS,
   newConditions: newConditionsArray,
 });
 
-export function fetchLocation(providedLocation) {
+export const requestLocation = () => ({
+  type: types.REQUEST_LOCATION,
+});
+
+export const receiveLocation = () => ({
+  type: types.RECEIVE_LOCATION,
+});
+
+export const requestWeather = () => ({
+  type: types.REQUEST_WEATHER,
+});
+
+export const receiveWeather = () => ({
+  type: types.RECEIVE_WEATHER,
+});
+
+export const fetchLocation = (locationQuery) => {
   return function (dispatch) {
-    const URL = process.env.REACT_APP_LOCATION_URL + providedLocation;
+    console.log("fetchingLocation");
+    dispatch(requestLocation());
+    const URL = process.env.REACT_APP_LOCATION_URL + locationQuery;
     return fetch(URL).then(
       response => response.json(),
       error => console.log('An error occurred.', error)
@@ -43,15 +61,19 @@ export function fetchLocation(providedLocation) {
           newLocation.description += ', ' + location.adminArea1;
         }
         dispatch(changeLocation(newLocation));
+        console.log('received location');
+        dispatch(requestWeather());
+        dispatch(receiveLocation());
         fetchWeather(lat, lng, dispatch);
       } else {
-        console.log('No location found matching ' + providedLocation);
+        console.log('No location found matching ' + locationQuery);
       }
     });
   };
 }
 
-export function fetchWeather(latitude, longitude, dispatch) {
+export const fetchWeather = (latitude, longitude, dispatch) => {
+  console.log("fetching weather");
   const URL = process.env.REACT_APP_WEATHER_URL + latitude + ',' + longitude;
   return fetch(URL).then(
     response => response.json(),
@@ -60,5 +82,7 @@ export function fetchWeather(latitude, longitude, dispatch) {
     dispatch(changeDay(null));
     dispatch(changeCurrentConditions(json.currently));
     dispatch(changeDailyConditions(json.daily.data));
+    console.log('received weather');
+    dispatch(receiveWeather());
   });
 }
