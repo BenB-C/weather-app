@@ -4,13 +4,14 @@ import './App.css';
 import SearchBar from './SearchBar';
 import CurrentConditions from './CurrentConditions';
 import DayForecastList from './DayForecastList';
+import { fetchLocationFromIP } from './../actions';
 
 function App(props) {
   console.log("app props:");
   console.log(props);
   let toRender;
   if (!props.location) {
-    toRender = <div>Location is null</div>;
+    props.dispatch(fetchLocationFromIP());
   } else if (props.fetchingLocation) {
     toRender = <div>Fetching location</div>;
   } else if (props.fetchingWeather) {

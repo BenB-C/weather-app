@@ -86,3 +86,23 @@ export const fetchWeather = (latitude, longitude, dispatch) => {
     dispatch(receiveWeather());
   });
 }
+
+export function fetchLocationFromIP() {
+  return function (dispatch) {
+    dispatch(requestLocation());
+    return fetch('http://ip-api.com/json').then(
+      response => response.json(),
+      error => console.log('An error occurred.', error)
+    ).then(function(json) {
+      const newLocation = {
+        description: json.city + ', ' + json.region,
+        latitude: json.lat,
+        longitude: json.lon,
+      };
+      dispatch(changeLocation(newLocation));
+      dispatch(requestWeather());
+      dispatch(receiveLocation());
+      fetchWeather(json.lat, json.lon, dispatch);
+    });
+  };
+}
