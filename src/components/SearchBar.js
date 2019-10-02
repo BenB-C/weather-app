@@ -14,9 +14,6 @@ function SearchBar({ dispatch }) {
           return;
         }
         dispatch(fetchLocation(input.value.trim()));
-        // ...we'll add more custom logic here later...
-        console.log('SEARCHED LOCATION:', input.value.trim());
-        //...instead of these console.log()s....
         input.value = '';
       }}>
         <button><img src={searchIcon} alt='magnifying glass' /></button>
