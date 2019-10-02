@@ -9,7 +9,7 @@ import * as actions from './../../actions/';
 import sampleData2 from './../../constants/sampleData2.json'
 
 describe('Weather App', () => {
-  const store = createStore(rootReducer, initialState);
+  const store = createStore(rootReducer, {});
 
   describe('currentConditionsReducer', () => {
     it('Should accept and return initial state.', () => {
