@@ -12,8 +12,8 @@ function App() {
       <SearchBar />
       <Location />
       <CurrentConditions />
-      <HourlyConditions />
       <DayForecastList />
+      <HourlyConditions />
     </div>
   );
 }
