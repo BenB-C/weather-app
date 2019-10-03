@@ -1,38 +1,57 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import './CurrentConditions.css';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import imageForIcon from './../helpers/imageForIcon';
 import timeFromUnixTime from './../helpers/timeFromUnixTime';
 
-function CurrentConditions(props) {
-  const conditions = props.conditions;
+function CurrentConditions({ weather }) {
+  if (weather.currentConditions.length === 0) {
+    return null;
+  }
+  if (weather.isFetching) {
+    return (<div>Fetching Weather</div>);
+  }
+  const dayIndex = weather.selectedDayIndex;
   let time;
   let temp;
-  if (props.selectedDayIndex == null) {
+  let sunriseTime;
+  let sunsetTime;
+  let conditions;
+  if (dayIndex == null) {
+    conditions = weather.currentConditions;
     time = timeFromUnixTime(conditions.time, 'weekdayAndTime');
     temp = Math.round(conditions.temperature);
+    sunriseTime = timeFromUnixTime(weather.dailyConditions[0].sunriseTime, 'time');
+    sunsetTime = timeFromUnixTime(weather.dailyConditions[0].sunsetTime, 'time');
   } else {
+    conditions = weather.dailyConditions[dayIndex];
     time = timeFromUnixTime(conditions.time, 'weekdayAndDate');
     temp = Math.round(conditions.temperatureHigh);
-  }
-  return (
+    sunriseTime = timeFromUnixTime(weather.dailyConditions[dayIndex].sunriseTime, 'time')
+    sunsetTime = timeFromUnixTime(weather.dailyConditions[dayIndex].sunsetTime, 'time')
+  } return (
     <div className="CurrentConditions">
       <div className="CurrentConditions-row1">
-        <div className="CurrentConditions-location">{props.location}</div>
         <div className="CurrentConditions-time">{time}</div>
         <div className="CurrentConditions-summary">{conditions.summary}</div>
       </div>
       <div className="CurrentConditions-row2">
-        <div className="CurrentConditions-icon-temp">
-          <img src={imageForIcon(conditions.icon)} alt="weather icon"/>
+        <div className="CurrentConditions-icon-and-temp">
+          <img
+            className="CurrentConditions-icon"
+            src={imageForIcon(conditions.icon)}
+            alt="weather icon"
+          />
           <div className="CurrentConditions-temp">{temp}</div>
-          <div className="temp-units">°F</div>
+          <div className="CurrentConditions-temp-units">°F</div>
         </div>
         <div className="CurrentConditions-misc-data">
-          <div>Precipitation: {Math.round(conditions.precipProbability * 100)}%</div>
+          <div>Chance of Rain: {Math.round(conditions.precipProbability * 100)}%</div>
           <div>Humidity: {Math.round(conditions.humidity * 100)}%</div>
           <div>Wind: {Math.round(conditions.windSpeed)} mph</div>
+          <div>Sunrise: {sunriseTime}</div>
+          <div>Sunset: {sunsetTime}</div>
         </div>
       </div>
     </div>
@@ -40,20 +59,11 @@ function CurrentConditions(props) {
 }
 
 CurrentConditions.propTypes = {
-  selectedDayIndex: PropTypes.number,
-  conditions: PropTypes.object.isRequired,
-  location: PropTypes.string.isRequired,
+  weather: PropTypes.object.isRequired,
 }
 
-const mapStateToProps = state => {
-  const dayIndex = state.selectedDayIndex;
-  // const dayIndex = 3;
-  return({
-    selectedDayIndex: dayIndex,
-    conditions: state.dailyConditions[dayIndex] || state.currentConditions,
-    location: state.location.description,
-  });
-};
-
+const mapStateToProps = state => ({
+  weather: state.weather,
+});
 
 export default connect(mapStateToProps)(CurrentConditions);
