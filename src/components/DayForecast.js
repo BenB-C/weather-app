@@ -13,7 +13,7 @@ function DayForecast({ index, selectedDayIndex, dailyConditions, dispatch }) {
   if (index === selectedDayIndex) {
     dayForcastStyle = {
       border: '5px solid lightblue',
-      borderRadius: '5px',
+      borderRadius: '10px',
       transform: 'translate(0, -5px)',
     };
   }
