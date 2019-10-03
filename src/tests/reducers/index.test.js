@@ -1,61 +1,54 @@
 import { createStore } from 'redux';
-import currentConditionsReducer from './../../reducers/currentConditionsReducer';
-import dayChangeReducer from './../../reducers/dayChangeReducer';
-import dailyConditionsReducer from './../../reducers/dailyConditionsReducer';
-import locationChangeReducer from './../../reducers/locationChangeReducer';
+import location from './../../reducers/location';
+import weather from './../../reducers/weather';
 import rootReducer from './../../reducers/';
-import { initialState } from './../../constants/InitialState';
+import { initialState } from './../../constants/initialState';
+// import sampleData from './../../constants/sampleData';
 import * as actions from './../../actions/';
-import sampleData2 from './../../constants/sampleData2.json'
+import thunkMiddleware from 'redux-thunk';
 
-describe('Weather App', () => {
-  const store = createStore(rootReducer, {});
+// const initialState = {
+//   location: {
+//     description: 'Portland, OR',
+//     latitude: sampleData.latitude,
+//     longitude: sampleData.longitude,
+//     isFetching: false,
+//   },
+//   weather: {
+//     currentConditions: sampleData.currently,
+//     dailyConditions: sampleData.daily.data,
+//     selectedDayIndex: null,
+//     isFetching: false,
+//   },
+// }
 
-  describe('currentConditionsReducer', () => {
+const applyMiddleware = require('redux').applyMiddleware
+const store = createStore(rootReducer, initialState, applyMiddleware(thunkMiddleware));
+
+describe('Weather App Reducers', () => {
+  describe('location reducer', () => {
     it('Should accept and return initial state.', () => {
-      expect(currentConditionsReducer(initialState.currentConditions, { type: null })).toEqual(initialState.currentConditions);
+      expect(location(initialState.location, { type: null })).toEqual(initialState.location);
     });
   });
 
-  describe('dailyConditionsReducer', () => {
+  describe('weather reducer', () => {
     it('Should accept and return initial state.', () => {
-      expect(dailyConditionsReducer(initialState.dailyConditions, { type: null })).toEqual(initialState.dailyConditions);
+      expect(weather(initialState.weather, { type: null })).toEqual(initialState.weather);
     });
   });
 
-  describe('dayChangeReducer', () => {
-    it('Should accept and return initial state.', () => {
-      expect(dayChangeReducer(initialState.selectedDayIndex, { type: null })).toEqual(initialState.selectedDayIndex);
-    });
-
-    it('Should change selected day index.', () => {
-      expect(dayChangeReducer(initialState.selectedDayIndex, actions.changeDay(2))).toEqual(2);
-    });
-  });
-
-  describe('locationChangeReducer', () => {
-    it('Should accept and return initial state.', () => {
-      expect(locationChangeReducer(initialState.location, { type: null })).toEqual(initialState.location);
-    });
-  });
-
-  describe('rootReducer', () => {
+  describe('rootReducer reducer', () => {
     it('Should accept and return initial state.', () => {
       expect(rootReducer(initialState, { type: null })).toEqual(initialState);
     });
 
     it('Should contain logic from all reducers.', () => {
-      expect(store.getState().currentConditions).toEqual(
-        currentConditionsReducer(initialState.currentConditions, { type: null })
-      );
-      expect(store.getState().dailyConditions).toEqual(
-        dailyConditionsReducer(initialState.dailyConditions, { type: null })
-      );
-      expect(store.getState().selectedDayIndex).toEqual(
-        dayChangeReducer(initialState.selectedDayIndex, { type: null })
-      );
       expect(store.getState().location).toEqual(
-        locationChangeReducer(initialState.location, { type: null })
+        location(initialState.location, { type: null })
+      );
+      expect(store.getState().weather).toEqual(
+        weather(initialState.weather, { type: null })
       );
     });
   });

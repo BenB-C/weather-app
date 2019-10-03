@@ -13,20 +13,25 @@
   grid-template-columns: 1fr 1fr; /*300px 200px;*/
 }
 
-.CurrentConditions-icon-temp {
+.CurrentConditions-icon-and-temp {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  align-content: flex-start;
+  align-content: center;
   color: #171717;
   height: 100%;
 }
 
-.CurrentConditions-icon-temp img {
-  height: 100%;
+.CurrentConditions-icon {
+  height: 100px;
+  transform: translate(0,10px);
 }
 
 .CurrentConditions-temp {
-  font-size: 3.2em;
-  transform: translate(0,-10px);
+  font-size: 100px;
+  /* transform: translate(0,-15px); */
+}
+.CurrentConditions-temp-units {
+  font-size: 25px;
+  transform: translate(0,21px);
 }

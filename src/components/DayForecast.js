@@ -6,11 +6,9 @@ import { changeDay } from './../actions';
 import timeFromUnixTime from './../helpers/timeFromUnixTime.js';
 import './DayForecast.css';
 
-function DayForecast(props) {
-  const data = props.dailyConditions[props.index];
-
-  const handleClick = () => props.dispatch(changeDay(props.index));
-
+function DayForecast({ index, dailyConditions, dispatch }) {
+  const data = dailyConditions[index];
+  const handleClick = () => dispatch(changeDay(index));
   return (
     <div className="DayForecast" onClick={handleClick} >
       <div>{timeFromUnixTime(data.time, 'weekdayShort')}</div>
@@ -24,12 +22,13 @@ function DayForecast(props) {
 }
 
 DayForecast.propTypes = {
-  index: PropTypes.number.isRequired,
+  index: PropTypes.number.isRequired, // passed prop
+  dailyConditions: PropTypes.array.isRequired, // from state
+  dispatch: PropTypes.func.isRequired, // from connect
 }
 
-const mapStateToProps = state => {
-  return({
-    dailyConditions: state.dailyConditions,
-  });
-}
+const mapStateToProps = state => ({
+  dailyConditions: state.weather.dailyConditions,
+});
+
 export default connect(mapStateToProps)(DayForecast);

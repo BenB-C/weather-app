@@ -20,25 +20,21 @@ export const changeDailyConditions = (newConditionsArray) => ({
   newConditions: newConditionsArray,
 });
 
-export const requestLocation = () => ({
-  type: types.REQUEST_LOCATION,
+export const updateWeather = (newWeather) => ({
+  type: types.UPDATE_WEATHER,
+  newWeather,
 });
 
-export const receiveLocation = () => ({
-  type: types.RECEIVE_LOCATION,
+export const requestLocation = () => ({
+  type: types.REQUEST_LOCATION,
 });
 
 export const requestWeather = () => ({
   type: types.REQUEST_WEATHER,
 });
 
-export const receiveWeather = () => ({
-  type: types.RECEIVE_WEATHER,
-});
-
 export const fetchLocation = (locationQuery) => {
   return function (dispatch) {
-    console.log("fetchingLocation");
     dispatch(requestLocation());
     const URL = process.env.REACT_APP_LOCATION_URL + locationQuery;
     return fetch(URL).then(
@@ -52,6 +48,7 @@ export const fetchLocation = (locationQuery) => {
         const newLocation = {
           latitude: lat,
           longitude: lng,
+          isFetching: false,
         };
         const { adminArea1, adminArea3, adminArea5, postalCode } = location;
         // new location description = 'City, State Zip'
@@ -61,33 +58,15 @@ export const fetchLocation = (locationQuery) => {
           newLocation.description += ', ' + location.adminArea1;
         }
         dispatch(changeLocation(newLocation));
-        console.log('received location');
-        dispatch(requestWeather());
-        dispatch(receiveLocation());
         fetchWeather(lat, lng, dispatch);
       } else {
-        console.log('No location found matching ' + locationQuery);
       }
     });
   };
 }
 
-export const fetchWeather = (latitude, longitude, dispatch) => {
-  console.log("fetching weather");
-  const URL = process.env.REACT_APP_WEATHER_URL + latitude + ',' + longitude;
-  return fetch(URL).then(
-    response => response.json(),
-    error => console.log('An error occurred.', error)
-  ).then(function(json) {
-    dispatch(changeDay(null));
-    dispatch(changeCurrentConditions(json.currently));
-    dispatch(changeDailyConditions(json.daily.data));
-    console.log('received weather');
-    dispatch(receiveWeather());
-  });
-}
+export const fetchLocationFromIP = () => {
 
-export function fetchLocationFromIP() {
   return function (dispatch) {
     dispatch(requestLocation());
     return fetch('http://ip-api.com/json').then(
@@ -98,11 +77,28 @@ export function fetchLocationFromIP() {
         description: json.city + ', ' + json.region,
         latitude: json.lat,
         longitude: json.lon,
+        isFetching: false,
       };
+
       dispatch(changeLocation(newLocation));
-      dispatch(requestWeather());
-      dispatch(receiveLocation());
       fetchWeather(json.lat, json.lon, dispatch);
     });
   };
+}
+
+export const fetchWeather = (latitude, longitude, dispatch) => {
+
+  dispatch(requestWeather());
+  const URL = process.env.REACT_APP_WEATHER_URL + latitude + ',' + longitude;
+  return fetch(URL).then(
+    response => response.json(),
+    error => console.log('An error occurred.', error)
+  ).then(function(json) {
+    dispatch(updateWeather({
+      currentConditions: json.currently,
+      dailyConditions: json.daily.data,
+      selectedDayIndex: null,
+      isFetching: false,
+    }));
+  });
 }

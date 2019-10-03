@@ -1,11 +1,14 @@
-import React from 'react';
-import DayForecast from './DayForecast';
 import './DayForecastList.css';
-// import { connect } from 'react-redux';
+import React from 'react';
+import PropTypes from 'prop-types';
+import DayForecast from './DayForecast';
+import { connect } from 'react-redux';
 
-function DayForecastList(props) {
-  const numberOfDays = 8;
-
+function DayForecastList({ weather }) {
+  if (weather.isFetching) {
+    return null;
+  }
+  const numberOfDays = weather.dailyConditions.length;
   return (
     <div className="DayForecastList">
       {Array.from(Array(numberOfDays).keys()).map(
@@ -15,11 +18,13 @@ function DayForecastList(props) {
   );
 }
 
-// function mapStateToProps(state) {
-//   return ({
-//     dailyConditions: state.dailyConditions
-//   });
-// }
+DayForecastList.propTypes = {
+  weather: PropTypes.object.isRequired,
+}
 
-// export default connect(mapStateToProps)(DayForecastList);
-export default DayForecastList;
+const mapStateToProps = state => {
+
+  return { weather: state.weather }
+}
+
+export default connect(mapStateToProps)(DayForecastList);
