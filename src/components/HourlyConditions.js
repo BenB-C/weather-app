@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import timeFromUnixTime from './../helpers/timeFromUnixTime';
-import { VictoryChart, VictoryLine, VictoryScatter, VictoryAxis } from 'victory';
+import { VictoryChart, VictoryArea, VictoryScatter, VictoryAxis } from 'victory';
 
 function HourlyConditions({ hourlyConditions }) {
   console.log('hourlyConditions', hourlyConditions);
@@ -13,12 +13,14 @@ function HourlyConditions({ hourlyConditions }) {
   const temperatureData = [];
   const xValues = [];
   const yValues = [];
+  const xLabels = [];
   for (let i = 0; i < 24; i++) {
     const data = hourlyConditions[i];
     const time = timeFromUnixTime(data.time, 'hour');
     const temperature = data.temperature;
     temperatureData[i] = { x: time, y: temperature };
     xValues[i] = time;
+    xLabels[i] = timeFromUnixTime(data.time, 'time');
     yValues[i] = temperature;
   }
   const yPadding = 2;
@@ -32,15 +34,15 @@ function HourlyConditions({ hourlyConditions }) {
     <VictoryChart
       heigth={100}
     >
-      <VictoryLine
+      <VictoryArea
         interpolation={'natural'}
         data={temperatureData}
-        style={{ data: { stroke: 'orange' } }}
+        style={{ data: { fill: '#FEF5CC', stroke: '#FFCC01' } }}
         domain={domain}
       />
       <VictoryScatter
         data={temperatureData}
-        size={3}
+        size={2}
         style={{ data: { fill: 'orange' } }}
         domain={domain}
       />
