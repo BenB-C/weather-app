@@ -5,35 +5,34 @@ import { connect } from 'react-redux';
 import timeFromUnixTime from './../helpers/timeFromUnixTime';
 import { VictoryChart, VictoryArea, VictoryScatter, VictoryAxis } from 'victory';
 
-function HourlyConditions({ hourlyConditions }) {
+function HourlyConditions({ selectedDayIndex, hourlyConditions }) {
   console.log('hourlyConditions', hourlyConditions);
-  if (hourlyConditions.length === 0) {
+  if (hourlyConditions.length === 0 || selectedDayIndex > 0) {
     return null;
   }
   const temperatureData = [];
-  const xValues = [];
   const yValues = [];
   const xLabels = [];
   for (let i = 0; i < 24; i++) {
     const data = hourlyConditions[i];
-    const time = timeFromUnixTime(data.time, 'hour');
     const temperature = data.temperature;
-    temperatureData[i] = { x: time, y: temperature };
-    xValues[i] = time;
-    xLabels[i] = timeFromUnixTime(data.time, 'time');
+    temperatureData[i] = { x: i, y: temperature };
+    xLabels[i] = timeFromUnixTime(data.time, 'hour');
     yValues[i] = temperature;
   }
   const yPadding = 2;
   const domain = {
-    x: [Math.min(...xValues), Math.max(...xValues)],
+    x: [0, 23],
     y: [Math.min(...yValues) - yPadding, Math.max(...yValues) + yPadding]
   };
   console.log(temperatureData);
   console.log(domain);
   return (
-    <VictoryChart
-      heigth={100}
-    >
+    <VictoryChart height={150} padding={{ top: 25, bottom: 25, left: 25, right: 25}}>
+      <VictoryAxis
+        tickCount={8}
+        tickValues={xLabels}
+      />
       <VictoryArea
         interpolation={'natural'}
         data={temperatureData}
@@ -55,6 +54,7 @@ HourlyConditions.propTypes = {
 }
 
 const mapStateToProps = state => ({
+  selectedDayIndex: state.weather.selectedDayIndex,
   hourlyConditions: state.weather.hourlyConditions,
 });
 
