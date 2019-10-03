@@ -66,7 +66,6 @@ export const fetchLocation = (locationQuery) => {
 }
 
 export const fetchLocationFromIP = () => {
-
   return function (dispatch) {
     dispatch(requestLocation());
     return fetch('http://ip-api.com/json').then(
@@ -87,7 +86,6 @@ export const fetchLocationFromIP = () => {
 }
 
 export const fetchWeather = (latitude, longitude, dispatch) => {
-
   dispatch(requestWeather());
   const URL = process.env.REACT_APP_WEATHER_URL + latitude + ',' + longitude;
   return fetch(URL).then(
@@ -96,6 +94,7 @@ export const fetchWeather = (latitude, longitude, dispatch) => {
   ).then(function(json) {
     dispatch(updateWeather({
       currentConditions: json.currently,
+      hourlyConditions: json.hourly.data,
       dailyConditions: json.daily.data,
       selectedDayIndex: null,
       isFetching: false,

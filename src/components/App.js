@@ -4,6 +4,7 @@ import SearchBar from './SearchBar';
 import Location from './Location';
 import CurrentConditions from './CurrentConditions';
 import DayForecastList from './DayForecastList';
+import HourlyConditions from './HourlyConditions';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <SearchBar />
       <Location />
       <CurrentConditions />
+      <HourlyConditions />
       <DayForecastList />
     </div>
   );
