@@ -14,7 +14,7 @@ function HourlyConditions({ selectedDayIndex, hourlyConditions }) {
   const xLabels = [];
   for (let i = 0; i < 24; i++) {
     const data = hourlyConditions[i];
-    const temperature = data.temperature;
+    const temperature = Math.round(data.temperature);
     temperatureData[i] = { x: i, y: temperature };
     xLabels[i] = timeFromUnixTime(data.time, 'hour');
     yValues[i] = temperature;
@@ -22,13 +22,20 @@ function HourlyConditions({ selectedDayIndex, hourlyConditions }) {
   const yPadding = 2;
   const domain = {
     x: [0, 23],
-    y: [Math.min(...yValues) - yPadding, Math.max(...yValues) + yPadding]
+    y: [Math.min(...yValues, 0), Math.max(...yValues)]
   };
   return (
-    <VictoryChart height={150} padding={{ top: 25, bottom: 25, left: 25, right: 25}}>
+    <VictoryChart
+      height={150} width={450}
+      padding={{ top: 25, bottom: 25, left: 25, right: 25}}
+    >
       <VictoryAxis
-        tickCount={8}
+        tickCount={12}
         tickValues={xLabels}
+        style={{
+          tickLabels: { fontSize: 10, padding: 0 },
+          ticks: { stroke: 'black', size: 2 }
+        }}
       />
       <VictoryArea
         interpolation={'natural'}
@@ -38,9 +45,13 @@ function HourlyConditions({ selectedDayIndex, hourlyConditions }) {
       />
       <VictoryScatter
         data={temperatureData}
-        size={2}
-        style={{ data: { fill: 'orange' } }}
+        size={0}
         domain={domain}
+        labels={yValues}
+        style={{
+          data: { fill: '#FFCC01' },
+          labels: { fontSize: 10, padding: 1, fill: '#FFCC01' }
+        }}
       />
     </VictoryChart>
   );
