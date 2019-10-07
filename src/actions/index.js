@@ -49,7 +49,7 @@ export const fetchLocation = (locationQuery) => {
       response => response.json(),
       error => console.log('An error occurred fetching location.', error)
     ).then(function(json) {
-      if (json) { 
+      if (json) {
         const results = json.results;
         if (results[0] && results[0].locations[0]) {
           const location = results[0].locations[0];
@@ -83,7 +83,6 @@ export const fetchLocationFromIP = () => {
       response => response.json(),
       error => console.log('An error occurred fetching location from IP.', error)
     ).then(function(json) {
-      console.log('fetchLocationFromIP json', json)
       if (json) {
         const newLocation = {
           description: json.city + ', ' + json.region,
