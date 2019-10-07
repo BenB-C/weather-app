@@ -9,14 +9,31 @@ class HourlyConditions extends React.Component {
   constructor(props) {
     super(props);
     this.state = { toShow: 'temp' };
+    this.buttonStyle = {
+      fontSize: '1.5em',
+      backgroundColor: 'lightgray',
+      marginRight: '5px',
+      outline: 'none',
+    };
+    this.highlightButtonStyle = {
+      ...this.buttonStyle,
+      border: '5px solid lightblue',
+      borderRadius: '5px',
+    };
+    this.tempButtonStyle = this.highlightButtonStyle;
+    this.precipButtonStyle = this.buttonStyle;
   }
 
-  showTemp = () => {
+  handleTempClick = () => {
     this.setState({ toShow: 'temp' });
+    this.tempButtonStyle = this.highlightButtonStyle;
+    this.precipButtonStyle = this.buttonStyle;
   }
 
-  showPrecip = () => {
+  handlePrecipClick = () => {
     this.setState({ toShow: 'precip' });
+    this.precipButtonStyle = this.highlightButtonStyle;
+    this.tempButtonStyle = this.buttonStyle;
   }
 
   render() {
@@ -28,8 +45,6 @@ class HourlyConditions extends React.Component {
     const data = [];
     const xLabels = [];
     const yValues = [];
-    let yLabels, areaColor, lineColor;
-
     for (let i = 0; i < 24; i++) {
       const datum = hourlyConditions[i];
       xLabels[i] = timeFromUnixTime(datum.time, 'hour');
@@ -42,23 +57,28 @@ class HourlyConditions extends React.Component {
       data[i] = { x: i, y: yValue };
       yValues[i] = yValue;
     }
+    let areaColor, lineColor, label;
     if (this.state.toShow === 'temp') {
-      yLabels = yValues;
-      domain.y = [Math.min(...yValues, 0), Math.max(...yValues)];
+      domain.y = [Math.min(...yValues, 0), Math.max(...yValues, 100)];
       areaColor = '#FEF5CC';
       lineColor = '#FFCC01';
+      label = 'Temperature (°F)';
     } else if (this.state.toShow === 'precip') {
-      yLabels = yValues.map(y => y + '%');
       domain.y = [0, 100];
       areaColor = '#60eafc';
       lineColor = '#0194ff';
+      label = 'Chance of Rain (%)';
     }
-    const graphProps = {xLabels, yLabels, domain, data, areaColor, lineColor}
+    const graphProps = { xLabels, yValues, domain, data, areaColor, lineColor, label };
     return (
       <div>
-        <button onClick={this.showTemp}>Temperature</button>
-        <button onClick={this.showPrecip}>Precipitation</button>
         <Graph {...graphProps} />
+        <button onClick={this.handleTempClick} style={this.tempButtonStyle}>
+          Temperature
+        </button>
+        <button onClick={this.handlePrecipClick} style={this.precipButtonStyle}>
+          Precipitation
+        </button>
       </div>
     );
   }
@@ -67,6 +87,7 @@ class HourlyConditions extends React.Component {
 HourlyConditions.propTypes = {
   selectedDayIndex: PropTypes.number,
   hourlyConditions: PropTypes.array.isRequired,
+  dispatch: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({

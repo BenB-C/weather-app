@@ -60,6 +60,7 @@ function CurrentConditions({ weather }) {
 
 CurrentConditions.propTypes = {
   weather: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
