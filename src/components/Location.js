@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { fetchLocationFromIP } from './../actions';
 
 function Location(props) {
-  console.log(props)
   const { isFetching, description, dispatch, fetchLocationFailed } = props
   if (isFetching) {
     return (<div>Fetching Location</div>);
