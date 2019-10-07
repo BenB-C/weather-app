@@ -22,14 +22,14 @@ function CurrentConditions({ weather }) {
     conditions = weather.currentConditions;
     time = timeFromUnixTime(conditions.time, 'weekdayAndTime');
     temp = Math.round(conditions.temperature);
-    sunriseTime = timeFromUnixTime(weather.dailyConditions[0].sunriseTime, 'time');
-    sunsetTime = timeFromUnixTime(weather.dailyConditions[0].sunsetTime, 'time');
+    sunriseTime = timeFromUnixTime(weather.dailyConditions[0].sunriseTime, 'hourAndMinutes');
+    sunsetTime = timeFromUnixTime(weather.dailyConditions[0].sunsetTime, 'hourAndMinutes');
   } else {
     conditions = weather.dailyConditions[dayIndex];
     time = timeFromUnixTime(conditions.time, 'weekdayAndDate');
     temp = Math.round(conditions.temperatureHigh);
-    sunriseTime = timeFromUnixTime(weather.dailyConditions[dayIndex].sunriseTime, 'time')
-    sunsetTime = timeFromUnixTime(weather.dailyConditions[dayIndex].sunsetTime, 'time')
+    sunriseTime = timeFromUnixTime(weather.dailyConditions[dayIndex].sunriseTime, 'hourAndMinutes')
+    sunsetTime = timeFromUnixTime(weather.dailyConditions[dayIndex].sunsetTime, 'hourAndMinutes')
   } return (
     <div className="CurrentConditions">
       <div className="CurrentConditions-row1">

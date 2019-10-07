@@ -4,13 +4,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchLocationFromIP } from './../actions';
 
-function Location({ isFetching, description, dispatch }) {
+function Location(props) {
+  console.log(props)
+  const { isFetching, description, dispatch, fetchLocationFailed } = props
   if (isFetching) {
     return (<div>Fetching Location</div>);
   }
   if (!description){
-    dispatch(fetchLocationFromIP());
-    return (<div>Search for a location</div>);
+    if (!fetchLocationFailed) {
+      dispatch(fetchLocationFromIP());
+    }
+    return null;
   }
   return (<div className="Location">{description}</div>);
 }
@@ -18,15 +22,15 @@ function Location({ isFetching, description, dispatch }) {
 Location.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   description: PropTypes.string,
+  fetchLocationFailed: PropTypes.bool,
   dispatch: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => {
-
-
 return ({
   isFetching: state.location.isFetching,
   description: state.location.description,
+  fetchLocationFailed: state.location.fetchLocationFailed,
 });
 }
 

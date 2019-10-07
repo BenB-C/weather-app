@@ -7,6 +7,7 @@ export const initialState = {
   },
   weather: {
     currentConditions: [], // array
+    hourlyConditions: [], // array
     dailyConditions: [], // array
     selectedDayIndex: null, // number or null
     isFetching: false, // boolean

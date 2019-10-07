@@ -33,72 +33,90 @@ export const requestWeather = () => ({
   type: types.REQUEST_WEATHER,
 });
 
+export const fetchLocationFailed = () => ({
+  type: types.FETCH_LOCATION_FAILED,
+});
+
+export const fetchWeatherFailed = () => ({
+  type: types.FETCH_WEATHER_FAILED,
+});
+
 export const fetchLocation = (locationQuery) => {
   return function (dispatch) {
     dispatch(requestLocation());
     const URL = process.env.REACT_APP_LOCATION_URL + locationQuery;
     return fetch(URL).then(
       response => response.json(),
-      error => console.log('An error occurred.', error)
+      error => console.log('An error occurred fetching location.', error)
     ).then(function(json) {
-      const results = json.results;
-      if (results[0] && results[0].locations[0]) {
-        const location = results[0].locations[0];
-        const { lat, lng } = location.latLng;
-        const newLocation = {
-          latitude: lat,
-          longitude: lng,
-          isFetching: false,
-        };
-        const { adminArea1, adminArea3, adminArea5, postalCode } = location;
-        // new location description = 'City, State Zip'
-        newLocation.description = adminArea5 + ', ' + adminArea3 + ' ' + postalCode;
-        if (adminArea1 !== 'US' && adminArea1 !== '') {
-          // Location is from another country, append country abbreviation
-          newLocation.description += ', ' + location.adminArea1;
+      if (json) { 
+        const results = json.results;
+        if (results[0] && results[0].locations[0]) {
+          const location = results[0].locations[0];
+          const { lat, lng } = location.latLng;
+          const newLocation = {
+            latitude: lat,
+            longitude: lng,
+            isFetching: false,
+          };
+          const { adminArea1, adminArea3, adminArea5, postalCode } = location;
+          // new location description = 'City, State Zip'
+          newLocation.description = adminArea5 + ', ' + adminArea3 + ' ' + postalCode;
+          if (adminArea1 !== 'US' && adminArea1 !== '') {
+            // Location is from another country, append country abbreviation
+            newLocation.description += ', ' + location.adminArea1;
+          }
+          dispatch(changeLocation(newLocation));
+          fetchWeather(lat, lng, dispatch);
         }
-        dispatch(changeLocation(newLocation));
-        fetchWeather(lat, lng, dispatch);
       } else {
+        dispatch(fetchLocationFailed());
       }
     });
   };
 }
 
 export const fetchLocationFromIP = () => {
-
   return function (dispatch) {
     dispatch(requestLocation());
     return fetch('http://ip-api.com/json').then(
       response => response.json(),
-      error => console.log('An error occurred.', error)
+      error => console.log('An error occurred fetching location from IP.', error)
     ).then(function(json) {
-      const newLocation = {
-        description: json.city + ', ' + json.region,
-        latitude: json.lat,
-        longitude: json.lon,
-        isFetching: false,
-      };
-
-      dispatch(changeLocation(newLocation));
-      fetchWeather(json.lat, json.lon, dispatch);
+      console.log('fetchLocationFromIP json', json)
+      if (json) {
+        const newLocation = {
+          description: json.city + ', ' + json.region,
+          latitude: json.lat,
+          longitude: json.lon,
+          isFetching: false,
+        };
+        dispatch(changeLocation(newLocation));
+        fetchWeather(json.lat, json.lon, dispatch);
+      } else {
+        dispatch(fetchLocationFailed());
+      }
     });
   };
 }
 
 export const fetchWeather = (latitude, longitude, dispatch) => {
-
   dispatch(requestWeather());
   const URL = process.env.REACT_APP_WEATHER_URL + latitude + ',' + longitude;
   return fetch(URL).then(
     response => response.json(),
-    error => console.log('An error occurred.', error)
+    error => console.log('An error occurred fetching weather.', error)
   ).then(function(json) {
-    dispatch(updateWeather({
-      currentConditions: json.currently,
-      dailyConditions: json.daily.data,
-      selectedDayIndex: null,
-      isFetching: false,
-    }));
+    if (json) {
+      dispatch(updateWeather({
+        currentConditions: json.currently,
+        hourlyConditions: json.hourly.data,
+        dailyConditions: json.daily.data,
+        selectedDayIndex: null,
+        isFetching: false,
+      }));
+    } else {
+      dispatch(fetchWeatherFailed());
+    }
   });
 }
