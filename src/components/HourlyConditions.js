@@ -87,6 +87,7 @@ class HourlyConditions extends React.Component {
 HourlyConditions.propTypes = {
   selectedDayIndex: PropTypes.number,
   hourlyConditions: PropTypes.array.isRequired,
+  dispatch: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({

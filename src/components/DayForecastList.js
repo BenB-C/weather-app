@@ -20,10 +20,10 @@ function DayForecastList({ weather }) {
 
 DayForecastList.propTypes = {
   weather: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => {
-
   return { weather: state.weather }
 }
 

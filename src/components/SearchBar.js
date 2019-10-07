@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchLocation } from './../actions';
 import searchIcon from './../assets/images/magnifying_glass.png';
@@ -23,6 +24,10 @@ function SearchBar({ dispatch }) {
       </form>
     </div>
   );
+}
+
+SearchBar.propTypes = {
+  dispatch: PropTypes.func.isRequired,
 }
 
 export default connect()(SearchBar);
