@@ -7,7 +7,9 @@ const location = (state = initialState.location, action) => {
   case CHANGE_LOCATION:
     return action.newLocation;
   case types.REQUEST_LOCATION:
-    return Object.assign({}, state, { isFetching: true });
+    return { ...state, isFetching: true };
+  case types.FETCH_LOCATION_FAILED:
+    return { ...state, isFetching: false, fetchLocationFailed: true };
   default:
     return state;
   }

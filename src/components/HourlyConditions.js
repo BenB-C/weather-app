@@ -6,7 +6,6 @@ import timeFromUnixTime from './../helpers/timeFromUnixTime';
 import { VictoryChart, VictoryArea, VictoryScatter, VictoryAxis } from 'victory';
 
 function HourlyConditions({ selectedDayIndex, hourlyConditions }) {
-  console.log('hourlyConditions', hourlyConditions);
   if (hourlyConditions.length === 0 || selectedDayIndex > 0) {
     return null;
   }
@@ -25,8 +24,6 @@ function HourlyConditions({ selectedDayIndex, hourlyConditions }) {
     x: [0, 23],
     y: [Math.min(...yValues) - yPadding, Math.max(...yValues) + yPadding]
   };
-  console.log(temperatureData);
-  console.log(domain);
   return (
     <VictoryChart height={150} padding={{ top: 25, bottom: 25, left: 25, right: 25}}>
       <VictoryAxis

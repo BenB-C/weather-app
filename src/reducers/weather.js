@@ -13,6 +13,8 @@ const weather = (state = initialState.weather, action) => {
     return Object.assign({}, state, { selectedDayIndex: action.newSelectedDayIndex });
   case types.REQUEST_WEATHER:
     return Object.assign({}, state, { isFetching: true });
+  case types.FETCH_WEATHER_FAILED:
+    return { ...state, isFetching: false, fetchWeatherFailed: true };
   default:
     return state;
   }
