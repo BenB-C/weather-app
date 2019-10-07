@@ -49,8 +49,8 @@ function HourlyConditions({ selectedDayIndex, hourlyConditions }) {
         domain={domain}
         labels={yValues}
         style={{
-          data: { fill: 'orange' },
-          labels: { fontSize: 10, padding: 1 }
+          data: { fill: '#FFCC01' },
+          labels: { fontSize: 10, padding: 1, fill: '#FFCC01' }
         }}
       />
     </VictoryChart>
