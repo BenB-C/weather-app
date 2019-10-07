@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { VictoryChart, VictoryArea, VictoryScatter, VictoryAxis } from 'victory';
 
 function Graph(props) {
-  console.log(props);
   let {xLabels, yLabels, domain, data, areaColor, lineColor} = props;
   return (
     <VictoryChart
@@ -46,8 +45,8 @@ Graph.propTypes = {
   yLabels: PropTypes.array.isRequired,
   domain: PropTypes.object.isRequired,
   data: PropTypes.array.isRequired,
-  fill: PropTypes.string.isRequired,
-  stroke: PropTypes.string.isRequired,
+  areaColor: PropTypes.string.isRequired,
+  lineColor: PropTypes.string.isRequired,
 }
 
 export default Graph;
