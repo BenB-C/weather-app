@@ -14,6 +14,9 @@ function CurrentConditions({ location, weather, dispatch }) {
   if (weather.isFetching) {
     return (<div>Fetching Weather</div>);
   }
+  function handleRefresh() {
+
+  }
   const dayIndex = weather.selectedDayIndex;
   let time;
   let temp;
@@ -32,15 +35,16 @@ function CurrentConditions({ location, weather, dispatch }) {
     temp = Math.round(conditions.temperatureHigh);
     sunriseTime = timeFromUnixTime(weather.dailyConditions[dayIndex].sunriseTime, 'hourAndMinutes')
     sunsetTime = timeFromUnixTime(weather.dailyConditions[dayIndex].sunsetTime, 'hourAndMinutes')
-  } return (
+  }
+  const buttonSize = '50px';
+  return (
     <div className="CurrentConditions">
       <div className="CurrentConditions-row1">
-        <button
+        <input
+          type='image' src={refreshIcon} alt='refresh'
+          style={{width: buttonSize, height: buttonSize}}
           onClick={() => dispatch(fetchWeather(location.latitude, location.longitude))}
-          style={{fontSize: '1em'}}
-        >
-          <img src={refreshIcon} alt='refresh' style={{height: '45px'}}/>
-        </button>
+        />
         <div style={{marginLeft: '5px'}}>
           <div className="CurrentConditions-time">{time}</div>
           <div className="CurrentConditions-summary">{conditions.summary}</div>
@@ -67,6 +71,8 @@ function CurrentConditions({ location, weather, dispatch }) {
     </div>
   );
 }
+
+
 
 CurrentConditions.propTypes = {
   location: PropTypes.object.isRequired,
