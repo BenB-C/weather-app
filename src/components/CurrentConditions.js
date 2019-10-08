@@ -4,13 +4,18 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import imageForIcon from './../helpers/imageForIcon';
 import timeFromUnixTime from './../helpers/timeFromUnixTime';
+import { fetchWeather } from './../actions';
+import refreshIcon from './../assets/images/refresh_icon.png';
 
-function CurrentConditions({ weather }) {
+function CurrentConditions({ location, weather, dispatch }) {
   if (weather.currentConditions.length === 0) {
     return null;
   }
   if (weather.isFetching) {
     return (<div>Fetching Weather</div>);
+  }
+  function handleRefresh() {
+
   }
   const dayIndex = weather.selectedDayIndex;
   let time;
@@ -30,8 +35,18 @@ function CurrentConditions({ weather }) {
     temp = Math.round(conditions.temperatureHigh);
     sunriseTime = timeFromUnixTime(weather.dailyConditions[dayIndex].sunriseTime, 'hourAndMinutes')
     sunsetTime = timeFromUnixTime(weather.dailyConditions[dayIndex].sunsetTime, 'hourAndMinutes')
-  } return (
+  }
+  const buttonSize = '50px';
+  return (
     <div className="CurrentConditions">
+      <div className='CurrentConditions-row0'>
+        <input
+          type='image' src={refreshIcon} alt='refresh'
+          style={{width: buttonSize, height: buttonSize}}
+          onClick={() => dispatch(fetchWeather(location.latitude, location.longitude))}
+        />
+        <div>{weather.summary}</div>
+      </div>
       <div className="CurrentConditions-row1">
         <div className="CurrentConditions-time">{time}</div>
         <div className="CurrentConditions-summary">{conditions.summary}</div>
@@ -58,12 +73,16 @@ function CurrentConditions({ weather }) {
   );
 }
 
+
+
 CurrentConditions.propTypes = {
+  location: PropTypes.object.isRequired,
   weather: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
+  location: state.location,
   weather: state.weather,
 });
 
