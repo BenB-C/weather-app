@@ -109,6 +109,7 @@ export const fetchWeather = (latitude, longitude) => {
     ).then(function(json) {
       if (json) {
         dispatch(updateWeather({
+          summary: json.daily.summary,
           currentConditions: json.currently,
           hourlyConditions: json.hourly.data,
           dailyConditions: json.daily.data,

@@ -39,16 +39,17 @@ function CurrentConditions({ location, weather, dispatch }) {
   const buttonSize = '50px';
   return (
     <div className="CurrentConditions">
-      <div className="CurrentConditions-row1">
+      <div className='CurrentConditions-row0'>
         <input
           type='image' src={refreshIcon} alt='refresh'
           style={{width: buttonSize, height: buttonSize}}
           onClick={() => dispatch(fetchWeather(location.latitude, location.longitude))}
         />
-        <div style={{marginLeft: '5px'}}>
-          <div className="CurrentConditions-time">{time}</div>
-          <div className="CurrentConditions-summary">{conditions.summary}</div>
-        </div>
+        <div>{weather.summary}</div>
+      </div>
+      <div className="CurrentConditions-row1">
+        <div className="CurrentConditions-time">{time}</div>
+        <div className="CurrentConditions-summary">{conditions.summary}</div>
       </div>
       <div className="CurrentConditions-row2">
         <div className="CurrentConditions-icon-and-temp">
