@@ -4,6 +4,7 @@ export const initialState = {
     latitude: 0, // number
     longitude: 0, //number
     isFetching: false, //number
+    mapUrl: '', // string
   },
   weather: {
     summary: '', // string

@@ -1,3 +1,11 @@
 .Location {
   font-size: 1.5em;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.Location-map {
+  align-self: center;
+  width: 50%;
 }

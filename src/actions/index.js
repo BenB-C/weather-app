@@ -76,7 +76,7 @@ export const fetchLocation = (locationQuery) => {
   };
 }
 
-export const fetchLocations = (locationQuery) => {
+export const fetchLocations = (locationQuery, fromIP) => {
   return function (dispatch) {
     dispatch(requestLocation());
     const URL = process.env.REACT_APP_LOCATION_URL + locationQuery;
@@ -86,12 +86,18 @@ export const fetchLocations = (locationQuery) => {
     ).then(function(json) {
       if (json) {
         const results = json.results;
-        const possibleLocations = results[0].locations;
-          const newLocation = {
+        if (fromIP) {
+          const location = results[0].locations[0];
+          dispatch(changeLocation(location));
+          dispatch(fetchWeather(location.latLng.lat, location.latLng.lng));
+        } else {
+          const possibleLocations = results[0].locations;
+          const location = {
             isFetching: false,
             possibleLocations,
           };
-          dispatch(changeLocation(newLocation));
+          dispatch(changeLocation(location));
+        }
       } else {
         dispatch(fetchLocationFailed());
       }
@@ -107,14 +113,7 @@ export const fetchLocationFromIP = () => {
       error => console.log('An error occurred fetching location from IP.', error)
     ).then(function(json) {
       if (json) {
-        const newLocation = {
-          description: json.city + ', ' + json.region,
-          latitude: json.lat,
-          longitude: json.lon,
-          isFetching: false,
-        };
-        dispatch(changeLocation(newLocation));
-        dispatch(fetchWeather(json.lat, json.lon));
+        dispatch(fetchLocations(json.lat + ',' + json.lon, true));
       } else {
         dispatch(fetchLocationFailed());
       }

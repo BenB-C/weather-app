@@ -1,0 +1,16 @@
+{
+    "as": "AS7922 Comcast Cable Communications, LLC",
+    "city": "Portland",
+    "country": "United States",
+    "countryCode": "US",
+    "isp": "Comcast Cable Communications, LLC",
+    "lat": 45.5235,
+    "lon": -122.676,
+    "org": "Comcast Cable Communications, LLC",
+    "query": "50.203.165.83",
+    "region": "OR",
+    "regionName": "Oregon",
+    "status": "success",
+    "timezone": "America/Los_Angeles",
+    "zip": "97207"
+}
