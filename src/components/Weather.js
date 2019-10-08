@@ -6,8 +6,8 @@ import CurrentConditions from './CurrentConditions';
 import DayForecastList from './DayForecastList';
 import HourlyConditions from './HourlyConditions';
 
-function Weather({locationIsFetching, weatherIsFetching, locationDescription}) {
-  if (locationIsFetching || locationDescription === null) return null;
+function Weather({ noLocation, weatherIsFetching, location }) {
+  if (noLocation) return null;
   if (weatherIsFetching) {
     return <p>Fetching Weather</p>;
   }
@@ -21,15 +21,16 @@ function Weather({locationIsFetching, weatherIsFetching, locationDescription}) {
 }
 
 Weather.propTypes = {
-  locationIsFetching: PropTypes.bool.isRequired,
+  noLocation: PropTypes.bool.isRequired,
   weatherIsFetching: PropTypes.bool.isRequired,
-  locationDescription: PropTypes.string,
 }
 
 const mapStateToProps = state => ({
-  locationIsFetching: state.location.isFetching,
   weatherIsFetching: state.weather.isFetching,
-  locationDescription: state.location.description,
+  noLocation: state.location.isFetching === true ||
+              state.location.description === null ||
+              state.location.possibleLocations !== undefined,
+  location: state.location,
 });
 
 export default connect(mapStateToProps)(Weather);
