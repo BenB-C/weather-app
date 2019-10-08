@@ -3,18 +3,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchLocationFromIP, changeLocation } from './../actions';
+import locationDescription from './../helpers/locationDescription';
 
 function Location(props) {
-  const { isFetching, description, dispatch, fetchLocationFailed, possibleLocations } = props
-  const handleClick = location => {
-    const newLocation = {
-      description: locationDescription(location),
-      latitude: location.latLng.lat,
-      longitude: location.latLng.lng,
-      isFetching: false,
-    }
-    dispatch(changeLocation(newLocation));
-  }
+  const {
+    isFetching,
+    description,
+    fetchLocationFailed,
+    possibleLocations,
+    mapUrl,
+    dispatch,
+  } = props
   if (isFetching) {
     return (<div className="Location">Fetching Location</div>);
   }
@@ -23,7 +22,11 @@ function Location(props) {
       <div className="Location">
         <ul>
         {possibleLocations.map((location, index) =>
-          <li onClick={() => handleClick(location)} key={index} style={{cursor: 'pointer'}}>
+          <li
+            key={index}
+            onClick={() => dispatch(changeLocation(location))}
+            style={{cursor: 'pointer'}}
+          >
             {locationDescription(location)}
           </li>)}
         </ul>
@@ -36,13 +39,19 @@ function Location(props) {
     }
     return null;
   }
-  return (<div className="Location">{description}</div>);
+  return (
+    <div className="Location">
+      <div>{description}</div>
+      <img className='Location-map' src={mapUrl} alt='location map' />
+    </div>
+  );
 }
 
 Location.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   description: PropTypes.string,
   fetchLocationFailed: PropTypes.bool,
+  mapUrl: PropTypes.string,
   dispatch: PropTypes.func.isRequired,
 }
 
@@ -51,19 +60,11 @@ return ({
   possibleLocations: state.location.possibleLocations,
   isFetching: state.location.isFetching,
   description: state.location.description,
+  mapUrl: state.location.mapUrl,
   fetchLocationFailed: state.location.fetchLocationFailed,
 });
 }
 
-const locationDescription = location => {
-  const street = location.street;
-  const postalCode = location.postalCode;
-  const city = location.adminArea5;
-  const county = location.adminArea4;
-  const state = location.adminArea3;
-  const country = location.adminArea1;
-  let dataArray = [ street, city, county, state, postalCode, country ];
-  return dataArray.filter(d => d !== '').join(', ');
-}
+
 
 export default connect(mapStateToProps)(Location);
