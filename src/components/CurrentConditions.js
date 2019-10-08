@@ -14,9 +14,6 @@ function CurrentConditions({ location, weather, dispatch }) {
   if (weather.isFetching) {
     return (<div>Fetching Weather</div>);
   }
-  function handleRefresh() {
-
-  }
   const dayIndex = weather.selectedDayIndex;
   let time;
   let temp;

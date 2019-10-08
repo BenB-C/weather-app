@@ -76,6 +76,29 @@ export const fetchLocation = (locationQuery) => {
   };
 }
 
+export const fetchLocations = (locationQuery) => {
+  return function (dispatch) {
+    dispatch(requestLocation());
+    const URL = process.env.REACT_APP_LOCATION_URL + locationQuery;
+    return fetch(URL).then(
+      response => response.json(),
+      error => console.log('An error occurred fetching location.', error)
+    ).then(function(json) {
+      if (json) {
+        const results = json.results;
+        const possibleLocations = results[0].locations;
+          const newLocation = {
+            isFetching: false,
+            possibleLocations,
+          };
+          dispatch(changeLocation(newLocation));
+      } else {
+        dispatch(fetchLocationFailed());
+      }
+    });
+  };
+}
+
 export const fetchLocationFromIP = () => {
   return function (dispatch) {
     dispatch(requestLocation());

@@ -14,6 +14,7 @@ class HourlyConditions extends React.Component {
       backgroundColor: 'lightgray',
       marginRight: '5px',
       outline: 'none',
+      cursor: 'pointer',
     };
     this.highlightButtonStyle = {
       ...this.buttonStyle,
