@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import imageForIcon from './../helpers/imageForIcon';
 import timeFromUnixTime from './../helpers/timeFromUnixTime';
+import { fetchWeather } from './../actions';
+import refreshIcon from './../assets/images/refresh_icon.png';
 
-function CurrentConditions({ weather }) {
+function CurrentConditions({ location, weather, dispatch }) {
   if (weather.currentConditions.length === 0) {
     return null;
   }
@@ -33,8 +35,16 @@ function CurrentConditions({ weather }) {
   } return (
     <div className="CurrentConditions">
       <div className="CurrentConditions-row1">
-        <div className="CurrentConditions-time">{time}</div>
-        <div className="CurrentConditions-summary">{conditions.summary}</div>
+        <button
+          onClick={() => dispatch(fetchWeather(location.latitude, location.longitude))}
+          style={{fontSize: '1em'}}
+        >
+          <img src={refreshIcon} alt='refresh' style={{height: '45px'}}/>
+        </button>
+        <div style={{marginLeft: '5px'}}>
+          <div className="CurrentConditions-time">{time}</div>
+          <div className="CurrentConditions-summary">{conditions.summary}</div>
+        </div>
       </div>
       <div className="CurrentConditions-row2">
         <div className="CurrentConditions-icon-and-temp">
@@ -59,11 +69,13 @@ function CurrentConditions({ weather }) {
 }
 
 CurrentConditions.propTypes = {
+  location: PropTypes.object.isRequired,
   weather: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
+  location: state.location,
   weather: state.weather,
 });
 
