@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import CurrentConditions from './CurrentConditions';
 import DayForecastList from './DayForecastList';
 import HourlyConditions from './HourlyConditions';
+import HistoricalSearch from './HistoricalSearch';
 
 function Weather({ noLocation, weatherIsFetching, location }) {
   if (noLocation) return null;
@@ -16,6 +17,7 @@ function Weather({ noLocation, weatherIsFetching, location }) {
       <CurrentConditions />
       <DayForecastList />
       <HourlyConditions />
+      <HistoricalSearch />
     </div>
   );
 }
