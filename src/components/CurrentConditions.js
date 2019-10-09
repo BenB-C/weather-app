@@ -15,31 +15,42 @@ function CurrentConditions({ location, weather, dispatch }) {
     return (<div>Fetching Weather</div>);
   }
   const dayIndex = weather.selectedDayIndex;
-  let time;
   let temp;
   let sunriseTime;
   let sunsetTime;
   let conditions;
   if (dayIndex == null) {
     conditions = weather.currentConditions;
-    time = timeFromUnixTime(conditions.time, 'weekdayAndTime');
-    temp = Math.round(conditions.temperature);
-    sunriseTime = timeFromUnixTime(weather.dailyConditions[0].sunriseTime, 'hourAndMinutes');
-    sunsetTime = timeFromUnixTime(weather.dailyConditions[0].sunsetTime, 'hourAndMinutes');
+    temp = conditions.temperature ? Math.round(conditions.temperature) : '?';
+    if (weather.dailyConditions) {
+      sunriseTime = timeFromUnixTime(weather.dailyConditions[0].sunriseTime, 'hourAndMinutes');
+      sunsetTime = timeFromUnixTime(weather.dailyConditions[0].sunsetTime, 'hourAndMinutes');
+    } else {
+      sunriseTime = null;
+      sunsetTime = null;
+    }
   } else {
     conditions = weather.dailyConditions[dayIndex];
-    time = timeFromUnixTime(conditions.time, 'weekdayAndDate');
     temp = Math.round(conditions.temperatureHigh);
     sunriseTime = timeFromUnixTime(weather.dailyConditions[dayIndex].sunriseTime, 'hourAndMinutes')
     sunsetTime = timeFromUnixTime(weather.dailyConditions[dayIndex].sunsetTime, 'hourAndMinutes')
   }
-  const buttonSize = '50px';
+  let time;
+  if (dayIndex !== null || weather.isHistoric) {
+    time = timeFromUnixTime(conditions.time, 'weekdayAndDate');
+  } else {
+    time = timeFromUnixTime(conditions.time, 'weekdayAndTime');
+  }
+  const wind = conditions.windSpeed ? Math.round(conditions.windSpeed) : '?';
+  const humidity = conditions.humidity ? Math.round(conditions.humidity * 100) : '?'
+  const rain = conditions.precipProbability ? Math.round(conditions.precipProbability * 100) : '?'
+  // const buttonSize = '50px';
   return (
     <div className="CurrentConditions">
       <div className='CurrentConditions-row0'>
         <input
           type='image' src={refreshIcon} alt='refresh'
-          style={{width: buttonSize, height: buttonSize}}
+          style={{width: '50px'}}
           onClick={() => dispatch(fetchWeather(location.latitude, location.longitude))}
         />
         <div>{weather.summary}</div>
@@ -59,11 +70,11 @@ function CurrentConditions({ location, weather, dispatch }) {
           <div className="CurrentConditions-temp-units">°F</div>
         </div>
         <div className="CurrentConditions-misc-data">
-          <div>Chance of Rain: {Math.round(conditions.precipProbability * 100)}%</div>
-          <div>Humidity: {Math.round(conditions.humidity * 100)}%</div>
-          <div>Wind: {Math.round(conditions.windSpeed)} mph</div>
-          <div>Sunrise: {sunriseTime}</div>
-          <div>Sunset: {sunsetTime}</div>
+          <div>Chance of Rain: {rain}%</div>
+          <div>Humidity: {humidity}%</div>
+          <div>Wind: {wind} mph</div>
+          <div>Sunrise: {sunriseTime || '?'}</div>
+          <div>Sunset: {sunsetTime || '?'}</div>
         </div>
       </div>
     </div>

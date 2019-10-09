@@ -20,15 +20,12 @@ const location = (state = initialState.location, action) => {
     }
     return location;
   case types.REQUEST_LOCATION:
-    return { isFetching: true };
+    return { ...state, isFetching: true };
   case types.FETCH_LOCATION_FAILED:
-    return { isFetching: false, fetchLocationFailed: true };
+    return { ...state, isFetching: false, fetchLocationFailed: true, error: action.error };
   default:
     return state;
   }
 };
-
-// Helper Functions
-
 
 export default location;

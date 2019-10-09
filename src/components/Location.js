@@ -13,7 +13,11 @@ function Location(props) {
     possibleLocations,
     mapUrl,
     dispatch,
+    error,
   } = props
+  if (fetchLocationFailed) {
+    return <p className="Location">Error fetching location: {error}</p>;
+  }
   if (isFetching) {
     return (<div className="Location">Fetching Location</div>);
   }
@@ -33,10 +37,8 @@ function Location(props) {
       </div>
     );
   }
-  if (!description){
-    if (!fetchLocationFailed) {
-      dispatch(fetchLocationFromIP());
-    }
+  if (!description) {
+    dispatch(fetchLocationFromIP());
     return null;
   }
   return (
@@ -51,6 +53,7 @@ Location.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   description: PropTypes.string,
   fetchLocationFailed: PropTypes.bool,
+  error: PropTypes.string,
   mapUrl: PropTypes.string,
   dispatch: PropTypes.func.isRequired,
 }
@@ -62,6 +65,7 @@ return ({
   description: state.location.description,
   mapUrl: state.location.mapUrl,
   fetchLocationFailed: state.location.fetchLocationFailed,
+  error: state.location.error,
 });
 }
 

@@ -5,6 +5,9 @@ import DayForecast from './DayForecast';
 import { connect } from 'react-redux';
 
 function DayForecastList({ weather }) {
+  if (!weather.dailyConditions) {
+    return null;
+  }
   const numberOfDays = weather.dailyConditions.length;
   return (
     <div className="DayForecastList">

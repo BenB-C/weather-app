@@ -13,7 +13,7 @@ export default (unixTime, format) => {
     case 'weekdayShort':
       return dateStr({weekday: 'short'});
     case 'weekdayAndDate':
-      return dateStr({weekday: 'long'}) + ' ' + dateStr({dateStyle: 'short'});
+      return dateStr({weekday: 'long'}) + ' ' + dateStr({dateStyle: 'medium'});
     default:
       return dateStr();
   }

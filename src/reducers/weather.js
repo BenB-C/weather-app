@@ -6,15 +6,17 @@ const weather = (state = initialState.weather, action) => {
   case types.UPDATE_WEATHER:
     return action.newWeather;
   case types.CHANGE_CURRENT_CONDITIONS:
-    return Object.assign({}, state, { currentConditions: action.newConditions });
+    return { ...state, currentConditions: action.newConditions };
   case types.CHANGE_DAILY_CONDITIONS:
-    return Object.assign({}, state, { dailyConditions: action.newConditions });
+    return { ...state, dailyConditions: action.newConditions };
   case types.CHANGE_DAY:
-    return Object.assign({}, state, { selectedDayIndex: action.newSelectedDayIndex });
+    return { ...state, selectedDayIndex: action.newSelectedDayIndex };
   case types.REQUEST_WEATHER:
-    return Object.assign({}, state, { isFetching: true });
+    return { ...state, isFetching: true };
   case types.FETCH_WEATHER_FAILED:
-    return { ...state, isFetching: false, fetchWeatherFailed: true };
+    return { ...state, isFetching: false, fetchWeatherFailed: true, error: action.error };
+  case types.FETCH_HISTORICAL_WEATHER_FAILED:
+    return { ...state, isFetching: false, fetchHistoricalWeatherFailed: true, error: action.error };
   default:
     return state;
   }
