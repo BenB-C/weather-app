@@ -21,7 +21,7 @@ function CurrentConditions({ location, weather, dispatch }) {
   let conditions;
   if (dayIndex == null) {
     conditions = weather.currentConditions;
-    temp = conditions.temperature ? Math.round(conditions.temperature) : '?';
+    temp = conditions.temperature !== undefined ? Math.round(conditions.temperature) : '--';
     if (weather.dailyConditions) {
       sunriseTime = timeFromUnixTime(weather.dailyConditions[0].sunriseTime, 'hourAndMinutes');
       sunsetTime = timeFromUnixTime(weather.dailyConditions[0].sunsetTime, 'hourAndMinutes');
@@ -41,9 +41,9 @@ function CurrentConditions({ location, weather, dispatch }) {
   } else {
     time = timeFromUnixTime(conditions.time, 'weekdayAndTime');
   }
-  const wind = conditions.windSpeed ? Math.round(conditions.windSpeed) : '?';
-  const humidity = conditions.humidity ? Math.round(conditions.humidity * 100) : '?'
-  const rain = conditions.precipProbability ? Math.round(conditions.precipProbability * 100) : '?'
+  const wind = conditions.windSpeed !== undefined ? Math.round(conditions.windSpeed) : '--';
+  const humidity = conditions.humidity !== undefined ? Math.round(conditions.humidity * 100) : '--'
+  const rain = conditions.precipProbability !== undefined ? Math.round(conditions.precipProbability * 100) : '--'
   // const buttonSize = '50px';
   return (
     <div className="CurrentConditions">
@@ -73,8 +73,8 @@ function CurrentConditions({ location, weather, dispatch }) {
           <div>Chance of Rain: {rain}%</div>
           <div>Humidity: {humidity}%</div>
           <div>Wind: {wind} mph</div>
-          <div>Sunrise: {sunriseTime || '?'}</div>
-          <div>Sunset: {sunsetTime || '?'}</div>
+          <div>Sunrise: {sunriseTime || '--'}</div>
+          <div>Sunset: {sunsetTime || '--'}</div>
         </div>
       </div>
     </div>
