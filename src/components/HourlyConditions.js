@@ -39,7 +39,7 @@ class HourlyConditions extends React.Component {
 
   render() {
     const { selectedDayIndex, hourlyConditions } = this.props;
-    if (hourlyConditions.length === 0 || selectedDayIndex > 0) {
+    if (!hourlyConditions || hourlyConditions.length === 0 || selectedDayIndex > 0) {
       return null;
     }
     const domain = { x: [0, 23] };
@@ -74,12 +74,14 @@ class HourlyConditions extends React.Component {
     return (
       <div>
         <Graph {...graphProps} />
-        <button onClick={this.handleTempClick} style={this.tempButtonStyle}>
-          Temperature
-        </button>
-        <button onClick={this.handlePrecipClick} style={this.precipButtonStyle}>
-          Precipitation
-        </button>
+        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+          <button onClick={this.handleTempClick} style={this.tempButtonStyle}>
+            Temperature
+          </button>
+          <button onClick={this.handlePrecipClick} style={this.precipButtonStyle}>
+            Precipitation
+          </button>
+        </div>
       </div>
     );
   }
@@ -87,7 +89,7 @@ class HourlyConditions extends React.Component {
 
 HourlyConditions.propTypes = {
   selectedDayIndex: PropTypes.number,
-  hourlyConditions: PropTypes.array.isRequired,
+  hourlyConditions: PropTypes.array,
   dispatch: PropTypes.func.isRequired,
 }
 
